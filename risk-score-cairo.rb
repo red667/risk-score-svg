@@ -33,17 +33,13 @@ def scale image, parts, line
     norm = line.last[0].abs + line.last[1].abs
     nv = line.last.reverse.map {|x| x / norm}
     nv[0] *= -1
-    
     (1..parts).each do |i|
 	a = line.last.map {|x| x / parts * i}
-
 	a[0] += nv[0] * 25
 	a[1] += nv[1] * 25
-
 	b = Array.new
 	b << a[0] - (nv[0] * 50)
 	b << a[1] - (nv[1] * 50)
-
 	polyline(image,[a, b])
     end
 end
@@ -190,7 +186,7 @@ cairo_image_surface(filename + ".svg",w,h,white) do |image|
     image.stroke
     
     #image.target.write_to_png(filename + ".png")
-
+    #puts "Wrote: " + filename + ".png"
 end
 
-puts "Wrote: " + filename
+puts "Wrote: " + filename + ".svg"

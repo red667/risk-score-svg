@@ -34,9 +34,11 @@ def scale image, parts, line
     nv = line.last.reverse.map {|x| x / norm}
     nv[0] *= -1
     (1..parts).each do |i|
+	#first point
 	a = line.last.map {|x| x / parts * i}
 	a[0] += nv[0] * 25
 	a[1] += nv[1] * 25
+	#second point
 	b = Array.new
 	b << a[0] - (nv[0] * 50)
 	b << a[1] - (nv[1] * 50)

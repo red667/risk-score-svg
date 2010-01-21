@@ -83,15 +83,16 @@ score_points = Array.new
 end 
 
 cairo_image_surface(filename + ".svg",w,h,white) do |image|
+    #basic cairo setup
     image.set_line_join(Cairo::LINE_JOIN_ROUND)
     image.set_line_cap(Cairo::LINE_CAP_ROUND)
     image.translate((w/2)+lw,r+lw+700)
-    
+    #gradient
     g = Cairo::RadialPattern.new(0,0,0,0,0,r)
     g.add_color_stop_rgba(0.2,0.0,1.0,0.0,1)
     g.add_color_stop_rgba(0.5,1.0,1.0,0.0,1)
     g.add_color_stop_rgba(1,1.0,0.0,0.0,1)
-
+    #pentagon
     polyline(image,pentagon_points)
     image.set_source(black)               
     image.set_line_width(lw)
@@ -99,7 +100,7 @@ cairo_image_surface(filename + ".svg",w,h,white) do |image|
     image.set_source(grey)
     image.set_line_width(0)
     image.fill
-
+    #score-points
     polyline(image,score_points)
     image.set_source(black)
     image.set_line_width(lw)
@@ -107,14 +108,14 @@ cairo_image_surface(filename + ".svg",w,h,white) do |image|
     image.set_source(g)
     image.set_line_width(0)
     image.fill
-    
+    #scale
     pentagon_points.each do |i|
 	scale(image,10,[[0,0],i])
     end
     image.set_source(black)
     image.set_line_width(lw)
     image.stroke
-
+    #score-values
     image.select_font_face("Arial", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD)
     image.set_font_size(150.0)
     pentagon_points.each_index do |i|
@@ -129,7 +130,7 @@ cairo_image_surface(filename + ".svg",w,h,white) do |image|
 	image.fill_preserve
 	image.stroke
     end
-    
+    #score-value
     image.set_font_size(250.0)
     rs = score.inject(0) { |s,v| s += v } / 5.00
     text = "Riskscore = " + rs.to_s
@@ -148,45 +149,23 @@ cairo_image_surface(filename + ".svg",w,h,white) do |image|
     image.text_path(text)
     image.fill_preserve
     image.stroke
-
+    #agenda
     x += 420
     y += 3300
     image.move_to(x, y)
     image.set_font_size(100)
     image.set_source(black)
     image.set_line_width(1)
-    text = "V .. Verbreitung"
-    image.text_path(text)
-    image.fill_preserve
-    image.stroke
-    y += 150
-    image.move_to(x, y)
-    text = "E .. Einfachheit"
-    image.text_path(text)
-    image.fill_preserve
-    image.stroke
-    y += 150
-    image.move_to(x, y)
-    text = "S .. Schadenspotenzial"
-    image.text_path(text)
-    image.fill_preserve
-    image.stroke
-    y += 150
-    image.move_to(x, y)
-    text = "H .. Häufigkeit"
-    image.text_path(text)
-    image.fill_preserve
-    image.stroke
-    y += 150
-    image.move_to(x, y)
-    text = "Z .. Zeitaufwand"
-
-    image.text_path(text)
-    image.fill_preserve
-    image.stroke
-    
+    agenda=["V .. Verbreitung","E .. Einfachheit","S .. Schadenspotenzial","H .. Häufigkeit","Z .. Zeitaufwand" ]
+    agenda.each do |a|
+	text = a
+	image.text_path(text)
+	image.fill_preserve
+	image.stroke
+	y += 150
+	image.move_to(x, y)
+    end
     #image.target.write_to_png(filename + ".png")
     #puts "Wrote: " + filename + ".png"
 end
-
 puts "Wrote: " + filename + ".svg"

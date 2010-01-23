@@ -1,4 +1,5 @@
-#! /usr/bin/ruby1.9 -Ku
+#! /usr/bin/ruby1.9.1
+# encoding = utf-8
 
 require 'cairo'
 include Math
@@ -34,14 +35,14 @@ def scale image, parts, line
     nv = line.last.reverse.map {|x| x / norm}
     nv[0] *= -1
     (1..parts).each do |i|
-	#first point
 	a = line.last.map {|x| x / parts * i}
-	a[0] += nv[0] * 25
-	a[1] += nv[1] * 25
-	#second point
-	b = Array.new
-	b << a[0] - (nv[0] * 50)
-	b << a[1] - (nv[1] * 50)
+	b = a.dup
+	2.times do |j| 
+	    #first point
+	    a[j] += nv[j] * 25
+	    #second point
+	    b[j] -= nv[j] * 25
+	end
 	polyline(image,[a, b])
     end
 end
@@ -70,10 +71,8 @@ end
 
 ARGV.each_index do |i|
     score << ARGV[i].to_i
-    filename += "%02d" % ARGV[i].to_i
-    if i <= 3
-	filename << "-"
-    end
+    filename << "%02d" % ARGV[i].to_i
+    filename << "-" if i <= 3
 end
 
 pentagon_points = Array.new
@@ -84,7 +83,7 @@ score_points = Array.new
     score_points << pentagon_points.last.map {|x| x / 10 * score[n-1]}
 end 
 
-cairo_image_surface(filename + ".svg",w,h,white) do |image|
+cairo_image_surface("#{filename}.svg",w,h,white) do |image|
     #basic cairo setup
     image.set_line_join(Cairo::LINE_JOIN_ROUND)
     image.set_line_cap(Cairo::LINE_CAP_ROUND)
@@ -121,7 +120,7 @@ cairo_image_surface(filename + ".svg",w,h,white) do |image|
     image.select_font_face("Arial", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD)
     image.set_font_size(150.0)
     pentagon_points.each_index do |i|
-	text = vars[i] + "=" + score[i].to_s
+	text = "#{vars[i]} = #{score[i]}"
 	extents = image.text_extents(text)
 	x = (pentagon_points[i][0] * 1.15) - (extents.width/2 + extents.x_bearing)
 	y = (pentagon_points[i][1] * 1.15) - (extents.height/2 + extents.y_bearing)
@@ -134,8 +133,7 @@ cairo_image_surface(filename + ".svg",w,h,white) do |image|
     end
     #score-value
     image.set_font_size(250.0)
-    rs = score.inject(0) { |s,v| s += v } / 5.00
-    text = "Riskscore = " + rs.to_s
+    text = "Riskscore = #{rs = score.inject(&:+) / 5.00 }"
     extents = image.text_extents(text)
     x = 0 -(extents.width/2 + extents.x_bearing)
     y = -h/2 + 550
@@ -167,7 +165,7 @@ cairo_image_surface(filename + ".svg",w,h,white) do |image|
 	y += 150
 	image.move_to(x, y)
     end
-    #image.target.write_to_png(filename + ".png")
-    #puts "Wrote: " + filename + ".png"
+    #image.target.write_to_png("#{filename} .png")
+    #puts "Wrote: #{filename} .png"
 end
 puts "Wrote: " + filename + ".svg"

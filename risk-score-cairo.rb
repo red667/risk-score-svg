@@ -67,12 +67,13 @@ filename = ""
 if ARGV.length <= 4
     puts "Usage: risk-score-cairo.rb V E S H Z"
     puts "Where V,E,S,H,Z are values from 1..10"
+    puts "float are values allowed"
     Process.exit
 end
 
 ARGV.each_index do |i|
-    score << ARGV[i].to_i
-    filename << "%02d" % ARGV[i].to_i
+    score << ARGV[i].to_f
+    filename << "%02f" % ARGV[i].to_f
     filename << "-" if i <= 3
 end
 

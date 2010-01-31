@@ -60,6 +60,7 @@ grey   = [0.5,0.5,0.5,1]
 green  = [0.0,1.0,0.0,1]
 
 vars = ["V","E","S","H","Z"]
+agenda = ["V .. Verbreitung","E .. Einfachheit","S .. Schadenspotenzial","H .. Häufigkeit","Z .. Zeitaufwand" ]
 score = Array.new
 filename = ""
 
@@ -156,7 +157,6 @@ cairo_image_surface("#{filename}.svg",w,h,white) do |image|
     image.set_font_size(100)
     image.set_source(black)
     image.set_line_width(1)
-    agenda=["V .. Verbreitung","E .. Einfachheit","S .. Schadenspotenzial","H .. Häufigkeit","Z .. Zeitaufwand" ]
     agenda.each do |a|
 	text = a
 	image.text_path(text)

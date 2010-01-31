@@ -122,7 +122,7 @@ cairo_image_surface("#{filename}.svg",w,h,white) do |image|
     image.select_font_face("Arial", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD)
     image.set_font_size(150.0)
     pentagon_points.each_index do |i|
-	text = "#{vars[i]} = #{score[i]}"
+	text = "#{vars[i]}=#{score[i]}"
 	extents = image.text_extents(text)
 	x = (pentagon_points[i][0] * 1.15) - (extents.width/2 + extents.x_bearing)
 	y = (pentagon_points[i][1] * 1.15) - (extents.height/2 + extents.y_bearing)
@@ -152,7 +152,7 @@ cairo_image_surface("#{filename}.svg",w,h,white) do |image|
     image.fill_preserve
     image.stroke
     #agenda
-    x += 420
+    x += 600
     y += 3300
     image.move_to(x, y)
     image.set_font_size(100)

@@ -87,6 +87,11 @@ end
 print "Enter Filename(EMPTY for Default): "
 line = Readline.readline('> ', true)
 filename = line if line != ""
+png = ""
+until png == "y" or png == "n"
+    print "Also write PNG (y/n): "
+    png = Readline.readline('> ', true)
+end
 
 pentagon_points = Array.new
 score_points = Array.new
@@ -178,7 +183,9 @@ cairo_image_surface("#{filename}.svg",w,h,white) do |image|
 	y += 150
 	image.move_to(x, y)
     end
-    #image.target.write_to_png("#{filename} .png")
-    #puts "Wrote: #{filename} .png"
+    if png == "y"
+	image.target.write_to_png("#{filename} .png")
+	puts "Wrote: #{filename} .png"
+    end
 end
 puts "Wrote: " + filename + ".svg"

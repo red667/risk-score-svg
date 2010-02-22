@@ -1,6 +1,7 @@
 #! /usr/bin/ruby1.9.1
 # encoding = utf-8
 
+require 'readline'
 require 'cairo'
 include Math
 
@@ -78,6 +79,15 @@ ARGV.each_index do |i|
     filename << "-" if i <= 3
 end
 
+Readline.completion_append_character = " "
+Readline.completion_proc = Proc.new do |str|
+      Dir[str+'*'].grep( /^#{Regexp.escape(str)}/ )
+end
+
+print "Enter Filename(EMPTY for Default): "
+line = Readline.readline('> ', true)
+filename = line if line != ""
+
 pentagon_points = Array.new
 score_points = Array.new
 (1..5).each do |n|
@@ -85,6 +95,7 @@ score_points = Array.new
 	(-1) * r * cos((2*PI/5)*n)]	# [xn,yn]
     score_points << pentagon_points.last.map {|x| x / 10 * score[n-1]}
 end 
+
 
 cairo_image_surface("#{filename}.svg",w,h,white) do |image|
     #basic cairo setup

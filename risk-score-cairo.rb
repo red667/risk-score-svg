@@ -169,10 +169,10 @@ cairo_image_surface("#{filename}.svg",w,h,white) do |image|
     image.fill_preserve
     image.stroke
     #agenda
-    x += 600
+    x += 300
     y += 3300
     image.move_to(x, y)
-    image.set_font_size(100)
+    image.set_font_size(150)
     image.set_source(black)
     image.set_line_width(1)
     agenda.each do |a|

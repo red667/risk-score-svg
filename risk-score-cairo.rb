@@ -66,8 +66,9 @@ filename = ""
 
 if ARGV.length <= 4
     puts "Usage: risk-score-cairo.rb V E S H Z"
-    puts "Where V,E,S,H,Z are values from 1..10"
-    puts "float are values allowed"
+    puts "Where #{vars.to_s} are values from 1..10"
+    puts agenda.to_s
+    puts "Float are values allowed."
     Process.exit
 end
 

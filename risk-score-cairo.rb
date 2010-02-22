@@ -184,7 +184,7 @@ cairo_image_surface("#{filename}.svg",w,h,white) do |image|
 	image.move_to(x, y)
     end
     if png == "y"
-	image.target.write_to_png("#{filename} .png")
+	image.target.write_to_png("#{filename}.png")
 	puts "Wrote: #{filename} .png"
     end
 end

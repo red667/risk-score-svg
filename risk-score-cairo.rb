@@ -64,34 +64,49 @@ vars = ["V","E","S","H","Z"]
 agenda = ["V .. Verbreitung","E .. Einfachheit","S .. Schadenspotenzial","H .. Häufigkeit","Z .. Zeitaufwand" ]
 score = Array.new
 filename = ""
+png = "n"
 
 if ARGV.length <= 4
-    puts "Usage: risk-score-cairo.rb V E S H Z"
+    puts "Usage: risk-score-cairo.rb V E S H Z [png] [<filename>]"
     puts "Where #{vars.to_s} are values from 1..10"
     puts agenda.to_s
     puts "Float are values allowed."
+    puts "png		PNG file will also be created."
+    puts "<filename>	If filename is set it will be used. Otherwise values will be used to generate name."
     Process.exit
 end
 
 ARGV.each_index do |i|
-    score << ARGV[i].to_f
-    filename << "%02f" % ARGV[i].to_f
-    filename << "-" if i <= 3
+    if i <= 4
+	score[i] = ARGV[i].to_f
+        filename << "%02f" % ARGV[i].to_f
+        filename << "-" if i <= 3
+    elsif ARGV[i] == "png"
+	png = "y"
+    else
+	filename = ARGV[i]
+    end
 end
 
-Readline.completion_append_character = " "
-Readline.completion_proc = Proc.new do |str|
-      Dir[str+'*'].grep( /^#{Regexp.escape(str)}/ )
-end
-
-print "Enter Filename(EMPTY for Default): "
-line = Readline.readline('> ', true)
-filename = line if line != ""
-png = ""
-until png == "y" or png == "n"
-    print "Also write PNG (y/n): "
-    png = Readline.readline('> ', true)
-end
+# ARGV.each_index do |i|
+#     score << ARGV[i].to_f
+#     filename << "%02f" % ARGV[i].to_f
+#     filename << "-" if i <= 3
+# end
+# 
+# Readline.completion_append_character = " "
+# Readline.completion_proc = Proc.new do |str|
+#       Dir[str+'*'].grep( /^#{Regexp.escape(str)}/ )
+# end
+# 
+# print "Enter Filename(EMPTY for Default): "
+# line = Readline.readline('> ', true)
+# filename = line if line != ""
+# png = ""
+# until png == "y" or png == "n"
+#     print "Also write PNG (y/n): "
+#     png = Readline.readline('> ', true)
+# end
 
 pentagon_points = Array.new
 score_points = Array.new

@@ -1,4 +1,4 @@
-#! /usr/bin/ruby1.9.1
+#! /usr/bin/env ruby
 # encoding = utf-8
 
 require 'readline'
@@ -61,7 +61,7 @@ grey   = [0.88,0.88,0.88,1]
 green  = [0.0,1.0,0.0,1]
 
 vars = ["V","E","S","H","Z"]
-agenda = ["V .. Verbreitung","E .. Einfachheit","S .. Schadenspotenzial","H .. Häufigkeit","Z .. Zeitaufwand" ]
+agenda = ["V .. Verbreitung","E .. Einfachheit","S .. Schadenspotential","H .. Häufigkeit","Z .. Zeitaufwand" ]
 score = Array.new
 filename = ""
 png = "n"

@@ -53,6 +53,7 @@ h = 4500
 r = 1300
 lw = 10
 
+#values red, green, blue, alpha
 red    = [1.0,0.0,0.0,1]
 black  = [0.0,0.0,0.0,1]
 white  = [1.0,1.0,1.0,1]
@@ -124,8 +125,9 @@ cairo_image_surface("#{filename}.svg",w,h,white) do |image|
     image.translate((w/2)+lw,r+lw+700)
     #gradient
     g = Cairo::RadialPattern.new(0,0,0,0,0,r)
+    #values: offset, red, green, blue, alpha
     g.add_color_stop_rgba(0.2,0.0,1.0,0.0,1)
-    g.add_color_stop_rgba(0.5,1.0,1.0,0.0,1)
+    g.add_color_stop_rgba(0.4,1.0,1.0,0.0,1)
     g.add_color_stop_rgba(1,1.0,0.0,0.0,1)
     #pentagon
     polyline(image,pentagon_points)

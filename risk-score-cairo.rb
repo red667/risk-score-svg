@@ -176,7 +176,7 @@ cairo_image_surface("#{filename}.svg",w,h,white) do |image|
     x = 0 -(extents.width/2 + extents.x_bearing)
     y = -h/2 + 550
     image.move_to(x,y)
-    if rs >= 8
+    if rs >= 7.5
 	image.set_source(red)
     elsif rs >= 5
 	image.set_source(yellow)
